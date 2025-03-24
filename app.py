@@ -35,6 +35,10 @@ def load_k8s_config():
         config.load_kube_config()
         logger.info("Loaded local kube configuration")
 
+@app.get("/")
+def welcome():
+    return {"message": "Welcome to KubeFlare API"}
+
 @app.get("/api/namespaces", tags=["kubernetes"])
 async def list_namespaces():
     """List all available namespaces."""
@@ -128,7 +132,6 @@ async def stream_logs(
 if __name__ == "__main__":
     uvicorn.run(
         "app:app",
-        host="0.0.0.0",
         port=8000,
         reload=True,
         log_level="info"
